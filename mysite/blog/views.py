@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from blog.models.post import Post
 
-from django.http import HttpResponse
 
-def home(request):
-    return HttpResponse("Página inicial do blog")
+class PostView(ListView):
+    queryset = Post.objects.filter(status=1).order_by('-created_on')
+    template_name = 'index.html'
+
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'post-detail.html'
 
 # Create your views here.
